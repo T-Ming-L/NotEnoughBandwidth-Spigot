@@ -1,0 +1,19 @@
+name: ${name}
+version: ${version}
+main: cn.ussshenzhou.notenoughbandwidth.NotEnoughBandwidthPlugin
+api-version: "26.2"
+author: USS_Shenzhou
+description: 带宽优化插件 - 数据包聚合与压缩
+folia-supported: true
+
+commands:
+  neb:
+    description: NotEnoughBandwidth 主命令
+    usage: /neb <reload|stat>
+    aliases: [notenoughbandwidth]
+    permission: neb.admin
+
+permissions:
+  neb.admin:
+    description: 允许使用所有 NEB 命令
+    default: op

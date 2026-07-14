@@ -1,0 +1,63 @@
+plugins {
+    id 'java'
+    id 'io.papermc.paperweight.userdev' version '2.0.0-SNAPSHOT'
+}
+
+group = 'cn.ussshenzhou'
+version = '26.2-1.0'
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://repo.papermc.io/repository/maven-public/' }
+}
+
+dependencies {
+    paperweight.paperDevBundle("1.21.11-R0.1-SNAPSHOT")
+    implementation("com.github.luben:zstd-jni:1.5.6-9")
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 21
+}
+
+processResources {
+    filesMatching("plugin.yml") {
+        expand(
+                version: version,
+                name: rootProject.name
+        )
+    }
+}
+
+// 禁用默认的 jar 任务，避免与 bundleJar 冲突
+tasks.named('jar') {
+    enabled = false
+}
+
+// 构建fat jar，打包zstd-jni依赖
+tasks.register('bundleJar', Jar) {
+    archiveBaseName = rootProject.name
+    archiveVersion = version
+    archiveClassifier = ''
+    
+    // 确保编译和资源处理先完成
+    dependsOn classes, processResources
+    
+    from sourceSets.main.output
+    
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude 'META-INF/**'
+    exclude 'META-INF/versions/**'
+}
+
+build.dependsOn bundleJar

@@ -1,0 +1,39 @@
+{
+    // [兼容模式] 启用后使用较保守的压缩策略，避免与部分客户端/服务端MOD不兼容
+    "compatibleMode": false,
+
+    // [数据包黑名单] 不参与聚合与压缩的数据包类型（Minecraft 协议名称）
+    "blackList": [
+        "minecraft:command_suggestion",
+        "minecraft:command_suggestions",
+        "minecraft:commands",
+        "minecraft:chat_command",
+        "minecraft:chat_command_signed",
+        "minecraft:player_info_update",
+        "minecraft:player_info_remove",
+        "minecraft:keep_alive"
+    ],
+
+    // [调试日志] 开启后将输出详细的数据包聚合与压缩日志，用于排查问题
+    "debugLog": false,
+
+    // [压缩级别] Zstd 压缩级别（21~25），数值越高压缩率越大但更消耗CPU，默认23
+    "contextLevel": 23,
+
+    // [DCC触发大小] 数据包大小超过此值（KB）时启用字典压缩（Delta Context Compression）
+    "dccSizeLimit": 60,
+
+    // [DCC窗口距离] 向前回溯多少个数据包作为字典压缩的参考窗口
+    "dccDistance": 5,
+
+    // [DCC超时] 字典缓存的有效时间（秒），超过此时间未使用的字典将被清理
+    "dccTimeout": 60,
+
+    // [最大数据包大小] 单个聚合包的最大体积，超过此大小会拆分发送（支持 B / KB / MB）
+    "maxPacketSize": "4MB",
+
+    // [免上下文压缩玩家] 列表中的玩家UUID将不使用上下文压缩（DCC），仅使用普通Zstd压缩
+    "playersDoNotUseContext": [
+        "00000000-0000-0000-0000-000000000000"
+    ]
+}
