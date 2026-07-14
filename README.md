@@ -1,8 +1,6 @@
 # NotEnoughBandwidth-Spigot
 
 > **AI 辅助开发** · 将 NeoForge Mod "[NotEnoughBandwidth](https://github.com/USS-Shenzhou/NotEnoughBandwidth)" 移植到 Spigot/Paper 的插件版本。
->
-> 原 Mod 需要同时安装客户端和服务端 Mod 才能工作。本插件将服务端逻辑移植为纯 Bukkit 插件，**无需客户端安装任何 Mod**，仅服务端安装即可生效。
 
 ## ⚠️ 测试说明
 
